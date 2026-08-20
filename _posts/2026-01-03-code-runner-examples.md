@@ -1,101 +1,189 @@
 ---
 layout: post
-courses: { csse: {week: 4}, csp: {week: 17}, csa: {week: 17 } }
+courses: { csse: {week: 5}, csp: {week: 1}, csa: {week: 1 } }
 codemirror: true
-title: Code Runner - Examples
-description: Build a lesson using multiple code runners on a page.  This modular approach allows you to create interactive lessons, more code -- less words.
+title: Code Runners - Raw MD
+description: It is advised to use IPYNB method of MD. This builds a lesson using multiple code runners in the same markdown file.  Th code runner approach allows you to create interactive lessons, more code samples -- less words.  
 permalink: /code
 ---
 
-## Python Lesson: Fix the Syntax Error
+## Introduction to Code Runners
 
-{% capture challenge1 %}
-Fix the syntax error. Run the code to get a hint!
+In this post, we will explore how to use code runners to create interactive lessons. Code runners allow you to embed code snippets that can be executed directly on the page, providing an engaging learning experience for students. We support 4 languages: Python, Java, JavaScript, and AP CSP Pseudocode.
+
+### Python Code Runner
+
+{% capture python_example %}
+print("Hello, World!")
+for i in range(5):
+    print(i)
 {% endcapture %}
+{% include runners/code.html runner_id="python-main" language="python" code=python_example%}
 
-{% capture code1 %}
-print('Hello World'
-{% endcapture %}
+The following code snippet demonstrates a simple Python code runner. You can run this code directly on the page to see the output.
 
-{% include runners/code.html
-   runner_id="exercise1"
-   language="python"
-   challenge=challenge1
-   code=code1
-%}
+### Java Code Runner
 
----
-
-## Python Lesson: Complete the Function
-
-{% capture challenge2 %}
-Complete the function to calculate the area of a rectangle. Replace the ??? with the correct calculation.
-{% endcapture %}
-
-{% capture code2 %}
-def calculate_area(length, width):
-    # Replace ??? with the correct formula
-    area = ???
-    return area
-''' Test calculate area function '''
-print(calculate_area(5, 3))
-print(calculate_area(10, 2))
-{% endcapture %}
-
-{% include runners/code.html
-   runner_id="exercise2"
-   language="python"
-   challenge=challenge2
-   code=code2
-   height="350px"
-%}
-
----
-
-## Java Lesson: Fix the Compilation Error
-
-{% capture challenge3 %}
-The code has a compilation error. Fix it!
-{% endcapture %}
-
-{% capture code3 %}
+{% capture java_example %}
 public class Main {
-  public static void main(String[] args) {
-    System.out.println("Hello, Java")
-  }
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        for (int i = 0; i < 5; i++) {
+            System.out.println(i);
+        }
+    }
 }
 {% endcapture %}
+{% include runners/code.html runner_id="java-main" language="java" code=java_example %}
 
-{% include runners/code.html
-   runner_id="exercise3"
-   language="java"
-   challenge=challenge3
-   code=code3
-%}
+The Java code runner allows you to execute Java code snippets. The example above prints "Hello, World!" and counts from 0 to 4.
 
----
+### JavaScript Code Runner
 
-## JavaScript Lesson: Complete the Loop
-
-{% capture challenge4 %}
-Complete the for loop to print numbers 1 through 5. Fill in the missing parts of the loop.
-{% endcapture %}
-
-{% capture code4 %}
-// Complete the for loop
-for (let i = ???; i <= ???; i++) {
-  console.log(i);
+{% capture js_example %}
+console.log("Hello, World!");
+for (let i = 0; i < 5; i++) {
+    console.log(i);
 }
 {% endcapture %}
+{% include runners/code.html runner_id="js-main" language="javascript" code=js_example %}
 
-{% include runners/code.html
-   runner_id="exercise4"
-   language="javascript"
-   challenge=challenge4
-   code=code4
-%}
+The JavaScript code runner lets you run JavaScript code snippets. The example provided logs "Hello, World!" and counts from 0 to 4 in the console.
 
----
+### AP CSP Pseudocode Runner
+
+Context: AP Computer Science Principles has a standardized pseudocode language that is used in the AP CSP exam. Our code runner supports this pseudocode, allowing students to practice and execute their pseudocode snippets directly on the page.
+
+{% capture csp_example %}
+num1 ← INPUT("Enter first number:")
+op ← INPUT("Enter operator (+, -, *, /):")
+num2 ← INPUT("Enter second number:")
+result ← 0
+IF (op = "+")
+{
+    result ← num1 + num2
+}
+ELSE
+{
+    IF (op = "-")
+    {
+        result ← num1 - num2
+    }
+    ELSE
+    {
+        IF (op = "*")
+        {
+            result ← num1 * num2
+        }
+        ELSE
+        {
+            IF (op = "/")
+            {
+                IF (num2 ≠ 0)
+                {
+                    result ← num1 / num2
+                }
+                ELSE
+                {
+                    DISPLAY("Error: Division by zero")
+                    result ← "undefined"
+                }
+            }
+            ELSE
+            {
+                DISPLAY("Invalid operator")
+                result ← "undefined"
+            }
+        }
+    }
+}
+
+DISPLAY("Result: "+ result)
+{% endcapture %}
+{% include runners/code.html runner_id="csp-main" language="pseudocode" code=csp_example %}
+
+The AP CSP Pseudocode runner allows you to execute pseudocode snippets. The example above is a simple calculator that takes two numbers and an operator as input and displays the result.
+
+
+### Embedding Code Runners in YOUR notebooks
+
+To embed code runners in your notebooks, you can use the following syntax:
+
+{% raw %}
+```liquid
+{% include runners/code.html runner_id="your-runner-id" language="your-language" code=your_code_variable %}
+```
+{% endraw %}
+
+Example Embedding a Python Code Runner:
+
+{% raw %}
+
+```liquid
+{% include runners/code.html runner_id="python-main" language="python" code=python_example %}
+```
+
+{% endraw %}
+
+This modular approach allows you to create interactive lessons with more code and less text, making it easier for students to learn by doing. You can customize the code snippets and languages to fit the needs of your lesson.
+
+Example Embedding a Pseudocode Code Runner with preset code:
+
+{% raw %}
+
+```liquid
+{% capture csp_example %}
+num1 ← INPUT("Enter first number:")
+op ← INPUT("Enter operator (+, -, *, /):")
+num2 ← INPUT("Enter second number:")
+result ← 0
+IF (op = "+")
+{
+    result ← num1 + num2
+}
+ELSE
+{
+    IF (op = "-")
+    {
+        result ← num1 - num2
+    }
+    ELSE
+    {
+        IF (op = "*")
+        {
+            result ← num1 * num2
+        }
+        ELSE
+        {
+            IF (op = "/")
+            {
+                IF (num2 ≠ 0)
+                {
+                    result ← num1 / num2
+                }
+                ELSE
+                {
+                    DISPLAY("Error: Division by zero")
+                    result ← "undefined"
+                }
+            }
+            ELSE
+            {
+                DISPLAY("Invalid operator")
+                result ← "undefined"
+            }
+        }
+    }
+}
+
+DISPLAY("Result: "+ result)
+{% endcapture %}
+{% include runners/code.html runner_id="csp-main" language="pseudocode" code=csp_example %}
+```
+
+{% endraw %}
+
+Notice the capture block that allows you to define the code snippet in a variable, which can then be passed to the code runner. This makes it easy to manage and update your code snippets without having to modify the HTML structure of your page.
 
 ## Code Runner Reference
 
